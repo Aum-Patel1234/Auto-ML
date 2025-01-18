@@ -1,0 +1,47 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% block title %}{% endblock %}
+  </title>
+  <link rel="shortcut icon" href="{% static "favicon.webp" %}" type="image/x-icon">
+  {% tailwind_css %}
+  <style>
+    html {
+      scroll-behavior: smooth; /* Enables smooth scrolling */
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4 shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div class="flex items-center">
+                <img src="{% static 'favicon.webp' %}" alt="AutoML Favicon" class="h-8 w-8 mr-2 rounded-full bg-blue"> <!-- Favicon Image -->
+                <a href="/" class="text-white text-xl font-bold">AutoML App</a>
+            </div>
+            <!-- Navigation Links -->
+            <div class="flex space-x-4">
+                {% block navbar_options %}{% endblock %}
+                <a href="https://github.com/Aum-Patel1234/Auto-ML" target="_blank" class="flex items-center">
+                    <img src="{% static 'github.png' %}" alt="GitHub" class="h-8 w-8 rounded-full">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center py-4">
+        <p>&copy; 2025 AutoML. All Rights Reserved.</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

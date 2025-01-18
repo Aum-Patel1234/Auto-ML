@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}AutoML{% endblock %}
+
+{% block navbar_options %}
+<a href="#" class="text-white text-sm px-4 py-2 rounded hover:bg-blue-500 transition">Home</a>
+<a href="#about" class="text-white text-sm px-4 py-2 rounded hover:bg-blue-500 transition">About</a>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<header class="bg-gradient-to-r from-blue-500 to-blue-700 text-white text-center py-20 mt-16">
+    <h1 class="text-4xl font-bold mb-4">Welcome to AutoML</h1>
+    <p class="text-lg mb-6">Upload your dataset and let us handle the analysis!</p>
+    <a href="#upload-section" class="bg-white text-blue-600 px-6 py-3 rounded shadow-md hover:bg-blue-100 transition">
+        Get Started
+    </a>
+</header>
+
+<!-- Upload Section -->
+<section id="upload-section" class="py-10 bg-gray-50">
+    <div class="container mx-auto bg-white p-8 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Upload Your Dataset</h2>
+        <p class="text-center text-gray-600 mb-8">Upload your dataset, and we’ll analyze it to suggest the best machine learning approach.</p>
+
+        <form action="{% url 'predictions' %}"  method="post" enctype="multipart/form-data" class="space-y-6" id="myForm">
+            {% csrf_token %}
+            <!-- Name Input -->
+            <div>
+                <label for="name" class="block text-gray-700 font-semibold mb-2">Dataset Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter dataset name"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- File Input -->
+            <div>
+                <label for="file" class="block text-gray-700 font-semibold mb-2">
+                    Upload File (Supported formats: .csv, .xlsx, .xls, .json)
+                </label>
+                
+                <input type="file" id="file" name="file" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                <div class="mt-6">
+                    <label class="block text-gray-700 font-semibold mb-2">Choose Analysis Type <span class="text-red-500">*</span></label>
+                    <p class="text-gray-600 text-sm mb-4">Please select whether your dataset is for Classification or Regression. This will help us analyze it accordingly.</p>
+                    
+                    <div class="flex space-x-8 items-center">
+                        <!-- Classification Option -->
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" id="classification" name="analysis_type" value="classification" class="hidden peer" required checked onclick="showTick('classification')">
+                            <div class="w-8 h-8  rounded-full flex items-center justify-center border-4 border-gray-400 border-solid transition duration-200 relative">
+                                <span id="classification-tick" class="text-white text-sm absolute">✔</span>
+                            </div>
+                            <span class="text-gray-700 font-semibold">Classification</span>
+                        </label>
+                
+                        <!-- Regression Option -->
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" id="regression" name="analysis_type" value="regression" class="hidden peer" required onclick="showTick('regression')">
+                            <div class="w-8 h-8  rounded-full flex items-center justify-center border-4 border-gray-400 border-solid transition duration-200 relative">
+                                <span id="regression-tick" class="hidden text-white text-sm absolute">✔</span>
+                            </div>
+                            <span class="text-gray-700 font-semibold">Regression</span>
+                        </label>
+                    </div>
+                
+                    <p class="text-red-500 text-sm mt-2 hidden" id="error-message">Please select an analysis type.</p>
+                </div>  
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button id="view" type="button" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 mx-4">
+                    View
+                </button>
+                <!-- Its the same name given in the urls.py in the app -->
+                <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 mx-4"> 
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Placeholder Section for Dataset Display -->
+<section id="dataset-display" class="py-10">
+    <div class="container mx-auto bg-gray-50 p-8 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Your Dataset</h2>
+        <p class="text-center text-gray-600 mb-8">Once you upload your dataset, it will be displayed here.</p>
+        <div class="flex justify-center">
+            <p class="text-gray-500 italic">No dataset uploaded yet. Please upload a dataset to view details.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-10 bg-gray-50" id="about">
+    <div class="container mx-auto">
+        <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Why Choose AutoML?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Feature 1 -->
+            <div class="bg-white p-6 shadow-md rounded-lg text-center hover:scale-105 hover:cursor-pointer hover:transition hover:delay-200">
+                <h3 class="text-xl font-semibold text-blue-600 mb-2">Automated Analysis</h3>
+                <p class="text-gray-600">We determine whether regression or classification is best for your dataset.</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-white p-6 shadow-md rounded-lg text-center hover:scale-105 hover:cursor-pointer hover:transition hover:delay-200">
+                <h3 class="text-xl font-semibold text-blue-600 mb-2">Time-Saving</h3>
+                <p class="text-gray-600">No need to analyze manually — let our algorithms do the work for you.</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-white p-6 shadow-md rounded-lg text-center hover:scale-105 hover:cursor-pointer hover:transition hover:delay-200">
+                <h3 class="text-xl font-semibold text-blue-600 mb-2">Easy to Use</h3>
+                <p class="text-gray-600">Simple UI designed for users of all expertise levels.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
