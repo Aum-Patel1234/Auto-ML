@@ -1,0 +1,75 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+db.sqlite3
+*.sqlite3
+/media/
+*.py[cod]
+staticfiles/
+.env
+*.mo
+
+# Django migrations
+*/migrations/*
+!*/migrations/__init__.py
+
+# Virtual environments
+venv/
+env/
+*.env
+Pipfile
+Pipfile.lock
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Machine Learning specific
+model/
+models/
+*.h5
+*.pkl
+*.joblib
+*.pb
+*.onnx
+*.tflite
+
+# Large datasets
+data/
+*.csv
+*.tsv
+*.gz
+*.zip
+*.json
+*.parquet
+
+# IDE specific
+.vscode/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+*.cover
+*.coverage
+.coverage.*
+
+# Testing
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.egg
+*.egg-info/
+dist/
+build/
