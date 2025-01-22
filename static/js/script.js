@@ -1,3 +1,5 @@
+let file_id = null;
+
 function showTick(selected) {
   const classificationRadioTick = document.getElementById(
     "classification-tick"
@@ -48,6 +50,7 @@ document.getElementById('file').addEventListener('change', async (event) => {
 
         if (response.ok) {
             const res = await response.json();
+            file_id = `${res['file_id']}_${file.name}`;     // set file id to send it to backend during sumbit
             const data = JSON.parse(res['data']);
 
             if (data.length > 0) {
@@ -97,4 +100,23 @@ document.getElementById('file').addEventListener('change', async (event) => {
         console.error("An error occurred while processing the file:", error);
         alert("An error occurred. Please try again.");
     }
+});
+
+document.getElementById('myForm').addEventListener('submit', function (event) {    
+    if (file_id) {
+        let hiddenInput = document.querySelector('input[name="file_id"]');
+        if (!hiddenInput) {
+            hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'file_id';
+            this.appendChild(hiddenInput);
+        }
+        hiddenInput.value = file_id;    // here is the value assigned to it
+    } else {
+        event.preventDefault();
+        alert('Please upload a file first!');
+    }
+});
+document.getElementById('myForm').addEventListener('click', function (event) {    
+    alert('We are analyzing the dataset it may take some time if data is huge...');
 });

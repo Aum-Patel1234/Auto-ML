@@ -4,69 +4,45 @@
 {% block title %}Prediction Results{% endblock %}
 
 {% block content %}
-<div class="container mx-auto py-20 px-4">
+<div class="container mx-auto py-16 px-6">
   <!-- Header Section -->
-  <div class="bg-white shadow-md rounded-lg p-6 text-center">
-    <h1 class="text-3xl font-bold text-blue-600 mb-4">Prediction Results</h1>
+  <div class="bg-blue-100 shadow-lg rounded-lg p-8 text-center mt-4">
+    <h1 class="text-4xl font-extrabold text-blue-700 mb-4">Prediction Results</h1>
     <p class="text-gray-700 text-lg">
-      Based on the dataset analysis, the most suitable machine learning algorithm has been identified.
+      A comprehensive analysis has determined the most suitable machine learning algorithm for your dataset.
     </p>
   </div>
 
-  <!-- Dataset Overview Section -->
-  <div class="bg-blue-50 shadow-md rounded-lg p-6 mt-8">
-    <h2 class="text-2xl font-bold text-blue-600 mb-4">Dataset Overview</h2>
-    <table class="w-full text-left table-auto">
-      <thead class="bg-blue-200">
+  <!-- Model Summary Section -->
+  <div class="bg-white shadow-lg rounded-lg p-8 mt-10">
+    <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">Model Performance Summary</h2>
+    <table class="table-auto w-full border-collapse border border-gray-300 rounded-lg">
+      <thead class="bg-blue-50">
         <tr>
-          <th class="px-4 py-2">Feature</th>
-          <th class="px-4 py-2">Type</th>
-          <th class="px-4 py-2">Details</th>
+          <th class="border border-gray-300 px-4 py-2 text-left text-blue-700 font-semibold">Attribute</th>
+          <th class="border border-gray-300 px-4 py-2 text-left text-blue-700 font-semibold">Value</th>
         </tr>
       </thead>
       <tbody>
-        {% for feature in dataset_overview %}
-        <tr class="bg-white border-b">
-          <td class="px-4 py-2">{{ feature.name }}</td>
-          <td class="px-4 py-2">{{ feature.type }}</td>
-          <td class="px-4 py-2">{{ feature.details }}</td>
-        </tr>
-        {% empty %}
+        <!-- Best Algorithm -->
         <tr>
-          <td colspan="3" class="px-4 py-2 text-center text-gray-500">No dataset overview available.</td>
+          <td class="border border-gray-300 px-4 py-2 font-semibold">Best Algorithm</td>
+          <td class="border border-gray-300 px-4 py-2 text-blue-700 font-bold">{{ best_model.best_model }}</td>
+        </tr>
+        <!-- Optimal Parameters -->
+        {% for param, value in best_model.best_params.items %}
+        <tr>
+          <td class="border border-gray-300 px-4 py-2 font-semibold">{{ param }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ value }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 
-  <!-- Prediction Result Section -->
-  <div class="bg-white shadow-md rounded-lg p-6 mt-8">
-    <h2 class="text-2xl font-bold text-blue-600 mb-4">Best-Suited Algorithm</h2>
-    <div class="flex flex-col md:flex-row items-center justify-between">
-      <div class="text-center mb-4 md:mb-0">
-        <p class="text-lg text-gray-700">The recommended algorithm for this dataset is:</p>
-        <h3 class="text-3xl font-bold text-blue-600">{{ algorithm_name }}</h3>
-      </div>
-      <img src="{% static 'algorithm.svg' %}" alt="{{ algorithm_name }}" class="w-32 h-32">
-    </div>
-  </div>
-
-  <!-- Key Insights Section -->
-  <div class="bg-blue-50 shadow-md rounded-lg p-6 mt-8">
-    <h2 class="text-2xl font-bold text-blue-600 mb-4">Key Insights</h2>
-    <ul class="list-disc pl-6">
-      {% for insight in insights %}
-      <li class="text-gray-700 text-lg">{{ insight }}</li>
-      {% empty %}
-      <li class="text-gray-500 text-lg">No insights available.</li>
-      {% endfor %}
-    </ul>
-  </div>
-
   <!-- Action Section -->
-  <div class="text-center mt-10">
-    <a href="/" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-500 transition">
+  <div class="text-center mt-12">
+    <a href="/" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-500 transition duration-200">
       Analyze Another Dataset
     </a>
   </div>
@@ -74,5 +50,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static "js/app_script.js" %}"></script>
+<script src="{% static 'js/app_script.js' %}"></script>
 {% endblock %}

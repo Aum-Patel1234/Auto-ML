@@ -1,1 +1,1 @@
-console.log("in the automl_app");
+console.log("in automl app");
