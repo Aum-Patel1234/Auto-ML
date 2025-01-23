@@ -14,9 +14,31 @@
     html {
       scroll-behavior: smooth; /* Enables smooth scrolling */
     }
+    .alert {
+      position: fixed;
+      margin: auto;
+      top: 20px;
+      background-color: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      opacity: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(0);
+      z-index: 1000;
+    }
+
+    .alert.hide {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
+    <div class="flex w-full justify-center">
+      <div id="customAlert" class="alert hide"></div>
+    </div>
     <!-- Navbar -->
     <nav class="bg-blue-600 p-4 shadow-md fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
